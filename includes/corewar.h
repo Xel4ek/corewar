@@ -7,6 +7,7 @@
 
 # include "op.h"
 #include "libft.h"
+# include <time.h>
 
 # define OP_LEN 1
 # define TYPE_LEN 1
@@ -43,7 +44,11 @@ typedef enum e_color
 	i_green,
 	i_purple,
 	i_red,
-	i_grey
+	i_grey,
+	l_blue,
+	l_green,
+	l_purple,
+	l_red
 }			t_color;
 
 typedef enum e_err
@@ -138,6 +143,9 @@ typedef struct s_game
 	int32_t		cursors_count;
 	t_data		*input;
 	t_color		color[MEM_SIZE];
+	int32_t     lives_count[MAX_PLAYERS];
+	int32_t 	doomsday_count;
+	t_bool      doomsday;
 	t_log		*log;
 }				t_game;
 
@@ -211,4 +219,10 @@ int32_t ft_convert_arg(int32_t arg, t_game *game, int32_t arg_type, t_bool idx);
 int32_t ft_get_arg(t_game *game, int32_t arg_type, t_bool idx);
 t_err ft_is_correct_number(const char *number);
 t_err ft_check_file_name(char *file_name);
+
+/*
+ * Visualisation
+ */
+void ft_past_reg(t_game *game, t_cursor *cursor, size_t position);
+
 #endif /* COREWAR_H */
