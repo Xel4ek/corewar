@@ -13,10 +13,17 @@
 #include "mlx.h"
 #include "vis.h"
 
+static void	ft_put_controls_info(t_window *win, t_point begin, t_point start)
+{
+	mlx_string_put(win->mlx, win->win, start.x, start.y, \
+	C_WHITE, "Press \'+\' to increase speed");
+	start.y += 25;
+	mlx_string_put(win->mlx, win->win, start.x, start.y, \
+	C_WHITE, "and \'-\' to decrease speed");
+}
+
 static void	ft_put_hint(t_window *win, t_point begin, t_point start)
 {
-	start.y += 210;
-	start.x = begin.x + 30;
 	mlx_string_put(win->mlx, win->win, start.x, start.y, \
 	C_WHITE, "for live op");
 	start.x -= 10;
@@ -68,5 +75,10 @@ void		ft_put_info(t_window *win, t_point begin)
 	start.y += 60;
 	start.x = begin.x + 15;
 	ft_put_next_string(win, start, "Carry's count", win->game->cursors_count);
+	start.y += 130;
+	start.x = begin.x + 15;
+	ft_put_controls_info(win, begin, start);
+	start.y += 80;
+	start.x = begin.x + 30;
 	ft_put_hint(win, begin, start);
 }

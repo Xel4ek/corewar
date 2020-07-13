@@ -37,4 +37,8 @@ t_err ft_flag_log(int32_t argc, int32_t *current, char **argv, t_data *data)
 	return success;
 }
 
-
+t_err ft_flag_vis(int32_t argc, int32_t *current, char **argv, t_data *data)
+{
+	data->vis_on = true;
+	return success;
+}

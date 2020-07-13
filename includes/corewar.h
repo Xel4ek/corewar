@@ -7,13 +7,15 @@
 
 # include "op.h"
 #include "libft.h"
+//#include "vis.h"
 # include <time.h>
+# include <pthread.h>
 
 # define OP_LEN 1
 # define TYPE_LEN 1
 # define REG_LEN 1
 # define MAX_OP 16
-# define MAX_OPT 5
+# define MAX_OPT 6
 
 typedef struct s_log
 {
@@ -125,6 +127,7 @@ typedef struct	s_data
 	t_bool		quiet;
 	t_bool		enable_aff;
 	t_bool		log;
+	t_bool		vis_on;
 	t_hero		hero_list[MAX_PLAYERS];
 }				t_data;
 
@@ -134,7 +137,7 @@ typedef struct s_game
 	t_cursor 	*head;
 	t_cursor 	*cursor;
 	t_hero		*winner;
-	size_t 	total_cycles;
+	size_t		total_cycles;
 	int32_t 	check_live;
 	int32_t 	cycle;
 	int32_t 	cycles_to_die;
@@ -146,8 +149,24 @@ typedef struct s_game
 	int32_t     lives_count[MAX_PLAYERS];
 	int32_t 	doomsday_count;
 	t_bool      doomsday;
+	t_bool		*start;
+	t_bool		delay;
+	pthread_mutex_t *mutex;
+	pthread_cond_t	*cv;
 	t_log		*log;
+	clock_t 		*fps;
 }				t_game;
+
+typedef struct	s_broker
+{
+	pthread_t	game;
+	pthread_cond_t game_cv;
+	pthread_mutex_t mutex;
+	t_bool		vis_on;
+	t_bool 		game_start;
+	clock_t		fps;
+	t_err		error;
+}				t_broker;
 
 union u_types
 {
@@ -175,6 +194,7 @@ t_err ft_flag_n(int32_t argc, int32_t *current, char **argv, t_data *data);
 t_err ft_flag_dump(int32_t argc, int32_t *current, char **argv, t_data *data);
 t_err ft_flag_a(int32_t argc, int32_t *current, char **argv, t_data *data);
 t_err ft_flag_log(int32_t argc, int32_t *current, char **argv, t_data *data);
+t_err ft_flag_vis(int32_t argc, int32_t *current, char **argv, t_data *data);
 
 static t_opt opt_tab[10] =
 {
@@ -183,10 +203,11 @@ static t_opt opt_tab[10] =
 	{3,"-dump", &ft_flag_dump, 2, "[nbr_cycles]","At the end of <nbr_cycles> of executions, dump the memory\n                    on the standard output and quit the game. The memory dumped\n                    in the hexadecimal format with 32 octets"
   "per line."},
 	{4,"-a", &ft_flag_a, 0,"", "Enable aff function"},
-	{5,"-log", &ft_flag_log, 0,"", "Enable logger \"fuck.log\" and \"game.log\""}
+	{5,"-log", &ft_flag_log, 0,"", "Enable logger \"fuck.log\" and \"game.log\""},
+	{6,"-vis", &ft_flag_vis, 0,"", "Enable visualisation"}
 };
 
-t_game *ft_init_game();
+t_game *ft_init_game(t_broker *broker);
 void ft_usage();
 void ft_logo();
 void *ft_game_over(t_game **game);

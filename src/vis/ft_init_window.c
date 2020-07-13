@@ -14,21 +14,7 @@
 #include "mlx.h"
 #include <stdlib.h>
 
-static void	ft_full_champs_info(t_window *win)
-{
-	int i;
-
-	i = -1;
-	while (++i < MAX_PLAYERS)
-	{
-		win->champs[i].id = 0;
-		win->champs[i].color = ft_check_color(blue + i);
-		win->champs[i].lifes = 5;
-		win->champs[i].life_count = 0;
-	}
-}
-
-t_window	*ft_init_window(void)
+t_window	*ft_init_window(t_game *game)
 {
 	t_window	*new;
 
@@ -43,5 +29,7 @@ t_window	*ft_init_window(void)
 	new->game = NULL;
 	new->champ_count = 0;
 	new->end = false;
+	new->game = game;
+	ft_draw_grid(new);
 	return (new);
 }

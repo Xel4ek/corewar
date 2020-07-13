@@ -14,7 +14,10 @@ t_err op_st(t_game *game)
 	arg2 = ft_get_data(game, type.arg2);
 	if(type.arg2 == REG_CODE)
 		cursor->regs[arg2 - 1] = cursor->regs[arg1 - 1];
-	if(type.arg2 == IND_CODE)
-		ft_itoa_vm(game->arena, cursor->pc + arg2 % IDX_MOD, cursor->regs[arg1 - 1]);
+	if(type.arg2 == IND_CODE) {
+        ft_itoa_vm(game->arena, cursor->pc + arg2 % IDX_MOD, cursor->regs[arg1 - 1]);
+        ft_past_reg(game, cursor, (cursor->pc + (arg2) % IDX_MOD) % MEM_SIZE);
+
+    }
 	return (success);
 }

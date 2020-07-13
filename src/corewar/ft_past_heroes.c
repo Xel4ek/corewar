@@ -8,14 +8,16 @@ static int ft_welcome_heroes(t_data *data)
 
 	count = 0;
 	i = 0;
-	ft_printf(YELLOW"Introducing  contestants ..."RESET"\n");
+	if (!(data->vis_on))
+		ft_printf(YELLOW"Introducing  contestants ..."RESET"\n");
 	while (i < MAX_PLAYERS)
 	{
 		if (data->hero_list[i].id)
 		{
 			++count;
 			ft_set_color(white + i + 1);
-			ft_printf("  * Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n",
+			if (!(data->vis_on))
+				ft_printf("  * Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n",
 					data->hero_list[i].id,
 					  data->hero_list[i].header.prog_size,
 					  data->hero_list[i].header.prog_name,
@@ -23,7 +25,8 @@ static int ft_welcome_heroes(t_data *data)
 		}
 		++i;
 	}
-	ft_printf(RESET"\n");
+	if (!(data->vis_on))
+		ft_printf(RESET"\n");
 	return (count);
 }
 

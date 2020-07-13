@@ -1,6 +1,5 @@
 #include "corewar.h"
 
-
 t_err ft_init_cursors(t_game *game)
 {
 	int i;
@@ -19,7 +18,8 @@ t_err ft_init_cursors(t_game *game)
 			cursor->regs[0] = -game->input->hero_list[i].id;
 			cursor->pc = MEM_SIZE / game->player_count * (--count);
 			cursor->alive = false;
-			game->color[cursor->current] += 5;
+			cursor->color = (t_color)(game->color[cursor->pc % MEM_SIZE] + 5);
+			game->color[cursor->pc % MEM_SIZE] = cursor->color;
 			cursor->next = game->head;
 			game->head = cursor;
 		}

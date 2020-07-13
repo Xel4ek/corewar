@@ -1,8 +1,21 @@
-#include "ft_printf.h"
-#include "corewar.h"
-#include "corewar_op.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_battle.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hwolf <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/17 13:34:18 by hwolf             #+#    #+#             */
+/*   Updated: 2020/03/17 13:34:19 by hwolf            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static t_bool ft_check_arg(t_game *game, unsigned char type, char index)
+#include "ft_printf.h"
+#include "vis.h"
+#include "corewar_op.h"
+#include <unistd.h>
+
+static t_bool	ft_check_arg(t_game *game, unsigned char type, char index)
 {
 	int32_t value;
 	int32_t op;
@@ -12,7 +25,7 @@ static t_bool ft_check_arg(t_game *game, unsigned char type, char index)
 	{
 		value = ft_atoi_vm(game->arena, &game->cursor->current, TYPE_LEN).v_1;
 		if ((g_op_tab[op].types[index] & 1) && value > 0 && value < 0x11)
-		 	return true;
+			return true;
 	}
 	if (type == DIR_CODE)
 	{
@@ -31,7 +44,7 @@ static t_bool ft_check_arg(t_game *game, unsigned char type, char index)
 	return (false);
 }
 
-static t_bool ft_check_types(t_game *game)
+static t_bool	ft_check_types(t_game *game)
 {
 	union u_types type;
 	int32_t op;
@@ -55,7 +68,7 @@ static t_bool ft_check_types(t_game *game)
 
 }
 
-static t_err ft_apply_op(t_game *game)
+static t_err	ft_apply_op(t_game *game)
 {
 	t_err err;
 	size_t temp;
@@ -69,7 +82,7 @@ static t_err ft_apply_op(t_game *game)
 	return (err);
 }
 
-static t_err ft_execute(t_game *game)
+static t_err	ft_execute(t_game *game)
 {
 	t_cursor *cursor;
 	t_err err;
@@ -91,7 +104,7 @@ static t_err ft_execute(t_game *game)
 	return (err);
 }
 
-static t_err main_loop(t_game *game)
+static t_err	main_loop(t_game *game)
 {
 	t_cursor *cursor;
 	t_err err;
@@ -101,6 +114,8 @@ static t_err main_loop(t_game *game)
 	while (game->cursor)
 	{
 		cursor = game->cursor;
+		if (game->color[game->cursor->pc % MEM_SIZE] > grey && game->color[game->cursor->pc % MEM_SIZE] < l_blue)
+			game->color[game->cursor->pc % MEM_SIZE] -= 5;
 		if (!cursor->occupy)
 		{
 			cursor->op = *(char*)(game->arena + cursor->pc);
@@ -111,7 +126,10 @@ static t_err main_loop(t_game *game)
 			cursor->occupy--;
 		if (!cursor->occupy)
 			err = ft_execute(game);
+		if (cursor->alive && game->color[game->cursor->pc % MEM_SIZE] < i_blue)
+			game->color[game->cursor->pc % MEM_SIZE] += 5;
 		game->cursor = game->cursor->next;
+
 	}
 	return (err);
 }
@@ -139,7 +157,9 @@ static void ft_doomsday(t_game *game)
 	t_cursor *prev;
 
 	(game->checks_done)++;
+	(game->doomsday_count)++;
 	game->cursor = game->head;
+	game->doomsday = true;
 	prev = NULL;
 	while (game->cursor)
 	{
@@ -147,6 +167,8 @@ static void ft_doomsday(t_game *game)
 		if (cursor->alive && game->cycles_to_die > 0)
 		{
 			cursor->alive = false;
+			if (game->color[game->cursor->pc % MEM_SIZE] > grey)
+				game->color[game->cursor->pc % MEM_SIZE] -= 5;
 			prev = game->cursor;
 			game->cursor = game->cursor->next;
 		}
@@ -183,6 +205,7 @@ t_bool ft_battle(t_game *game)
 		}
 		if (game->total_cycles == game->input->dump)
 			return true;
+		usleep(*(game->fps));
 	}
 	if (game->input->dump == 0)
 		return true;

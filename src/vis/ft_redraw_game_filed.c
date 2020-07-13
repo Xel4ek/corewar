@@ -12,6 +12,7 @@
 
 #include "mlx.h"
 #include "vis.h"
+#include <unistd.h>
 
 static void	ft_write_winner(t_window *win, t_point begin)
 {
@@ -48,7 +49,7 @@ static void	ft_write_result(t_window *win)
 	t_point	param;
 
 	win->end = true;
-	ft_delay(5);
+	usleep(50000);
 	begin = ft_rewrite_point(FIELD_X + 15, FIELD_Y + 15, C_BLACK);
 	param = ft_rewrite_point(FIELD_WIDTH - 30, FIELD_HEIGHT - 30, C_BLACK);
 	ft_fill_rectangle(win, begin, param);
@@ -57,6 +58,8 @@ static void	ft_write_result(t_window *win)
 	mlx_string_put(win->mlx, win->win, begin.x + 20, \
 	begin.y +  60, C_CYAN, "The winner is:");
 	ft_write_winner(win, begin);
+	mlx_string_put(win->mlx, win->win, begin.x + 20, \
+	begin.y +  110, C_CYAN, "Comment:");
 }
 
 static void	ft_write_string(t_window *win, t_point begin, int nbr)
@@ -96,13 +99,13 @@ int			ft_redraw_game_field(t_window *win)
 	t_point	begin;
 	t_point	param;
 
-	if (win->game->head)
+	if (win->game->head && *(win->game->start))
 	{
 		ft_rewrite_info(win, &begin, &param);
 		begin = ft_rewrite_point(FIELD_X + 15, FIELD_Y + 15, C_BLACK);
 		ft_draw_game_field(win, begin);
 	}
-	else if (win->end == false)
+	else if (win->end == false && *(win->game->start))
 		ft_write_result(win);
 	return (0);
 }

@@ -27,6 +27,8 @@ static void	ft_redraw_circles(t_window *win, t_point *begin, int rad, int *k)
 	}
 	else
 	{
+		begin->color = ft_check_color(win->game->color[*k] - 10);
+		ft_draw_solid_circle(win, *begin, rad);
 		begin->color = ft_check_color(win->game->color[*k]);
 		ft_draw_circle(win, *begin, rad);
 		win->game->color[*k] -= 10;
