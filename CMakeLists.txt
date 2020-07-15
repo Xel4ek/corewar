@@ -14,6 +14,12 @@ set(COREWAR_SRC
         src/corewar/ft_past_heroes.c
         src/corewar/ft_init_cursors.c
         src/corewar/ft_battle.c
+        src/corewar/ft_doomsday.c
+        src/corewar/ft_execute.c
+        src/corewar/ft_options_2.c
+        src/corewar/ft_get_heroes.c
+        src/corewar/ft_check_opt.c
+        src/corewar/ft_get_heroes_file.c
         src/corewar/ft_print_resualt.c
         src/corewar/ft_atoin.c
         src/corewar/ft_new_cursor.c

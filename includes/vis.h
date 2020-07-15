@@ -16,7 +16,7 @@
 # include "corewar.h"
 # include <pthread.h>
 
-# define WINDOW_HEIGHT 800
+# define WINDOW_HEIGHT 760
 # define WINDOW_WIDTH  1280
 # define WINDOW_TITLE "Corewar"
 # define ESCAPE 53

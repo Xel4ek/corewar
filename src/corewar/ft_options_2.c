@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_op.c                                        :+:      :+:    :+:   */
+/*   ft_options_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwolf <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned char	ft_get_op(void *data)
+#include "corewar.h"
+#include "libft.h"
+
+t_err	ft_flag_vis(int32_t argc, int32_t *current, char **argv, t_data *data)
 {
-	return (*(unsigned char*)data);
+	data->vis_on = true;
+	return (success);
 }

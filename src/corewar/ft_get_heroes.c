@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_options.c                                       :+:      :+:    :+:   */
+/*   ft_get_heroes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwolf <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,41 +11,43 @@
 /* ************************************************************************** */
 
 #include "corewar.h"
+#include <fcntl.h>
+#include <zconf.h>
 #include "libft.h"
 
-t_err	ft_flag_n(int32_t argc, int32_t *current, char **argv, t_data *data)
+static t_err	ft_get_hero(t_hero *hero)
 {
+	t_mem	*mem;
 	t_err	err;
+	int		fd;
 
 	err = success;
-	if (++(*current) < argc && !(err = ft_is_correct_number(argv[(*current)])))
-		if (++(*current) >= argc || \
-			(err = ft_check_file_name(argv[(*current)])))
-			return (err);
+	if ((fd = open(hero->file_name, O_RDONLY)) <= 0)
+		return (no_file);
+	if (!(mem = ft_init_memory()))
+		return (no_memory);
+	if (fast_read_in_memory(fd, mem) == -1)
+		err = w_file_read;
+	if (!err)
+		err = ft_parse_hero(hero, mem);
+	ft_memdel((void**)&mem->head);
+	ft_memdel((void**)&mem);
+	close(fd);
 	return (err);
 }
 
-t_err	ft_flag_dump(int32_t argc, int32_t *current, char **argv, t_data *data)
+t_err			ft_get_heroes(t_data *data)
 {
-	if (++(*current) < argc && (data->dump = ft_atoi(argv[*current])) >= 0)
-		return (success);
-	return (w_format);
-}
+	int	i;
+	int	err;
 
-t_err	ft_flag_q(int32_t argc, int32_t *current, char **argv, t_data *data)
-{
-	data->quiet = true;
-	return (success);
-}
-
-t_err	ft_flag_a(int32_t argc, int32_t *current, char **argv, t_data *data)
-{
-	data->enable_aff = true;
-	return (success);
-}
-
-t_err	ft_flag_log(int32_t argc, int32_t *current, char **argv, t_data *data)
-{
-	data->log = true;
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (data->hero_list[i].id)
+			if ((err = ft_get_hero(data->hero_list + i)))
+				return (err);
+		++i;
+	}
 	return (success);
 }

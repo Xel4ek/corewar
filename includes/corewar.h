@@ -223,10 +223,15 @@ t_err ft_init_cursors(t_game *game);
 t_cursor *ft_new_cursor();
 t_err ft_clone_cursor(t_game *game, size_t address);
 t_bool ft_battle(t_game *game);
+void	ft_doomsday(t_game *game);
+t_err	ft_execute(t_game *game);
 void ft_print_result(t_game *game);
 void ft_print_memory(void *start, void *end, void *mark, void *tail);
 int ft_set_color(t_color color);
 int32_t ft_get_data(t_game *game, int32_t arg_type);
+t_err ft_get_heroes(t_data *data);
+t_err ft_check_opt(int32_t argc, char **argv, t_data *data);
+t_err	ft_get_heroes_files(int argc, char **argv, t_data *data);
 /*
  * Logger
  */

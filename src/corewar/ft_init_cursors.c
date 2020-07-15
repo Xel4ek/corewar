@@ -1,15 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init_cursors.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hwolf <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/17 13:34:18 by hwolf             #+#    #+#             */
+/*   Updated: 2020/03/17 13:34:19 by hwolf            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
-t_err ft_init_cursors(t_game *game)
+t_err	ft_init_cursors(t_game *game)
 {
-	int i;
-	int32_t count;
-	t_cursor *cursor;
+	int			i;
+	int32_t		count;
+	t_cursor	*cursor;
+
 	i = MAX_PLAYERS;
 	count = game->player_count;
 	while (i--)
 	{
-		if(game->input->hero_list[i].id)
+		if (game->input->hero_list[i].id)
 		{
 			if (!(cursor = ft_new_cursor()))
 				return (no_memory);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_options.c                                       :+:      :+:    :+:   */
+/*   ft_check_opt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hwolf <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,41 +11,39 @@
 /* ************************************************************************** */
 
 #include "corewar.h"
+#include <fcntl.h>
 #include "libft.h"
 
-t_err	ft_flag_n(int32_t argc, int32_t *current, char **argv, t_data *data)
+t_err	ft_check_opt(int32_t argc, char **argv, t_data *data)
 {
 	t_err	err;
+	int		i;
+	int		j;
 
+	i = 0;
 	err = success;
-	if (++(*current) < argc && !(err = ft_is_correct_number(argv[(*current)])))
-		if (++(*current) >= argc || \
-			(err = ft_check_file_name(argv[(*current)])))
-			return (err);
+	while (++i < argc)
+	{
+		if (!argv[i] || !argv[i][0])
+			return (w_format);
+		j = MAX_OPT;
+		if (argv[i][0] == '-' && argv[i][1])
+			while (j--)
+			{
+				if (!ft_strcmp(argv[i], opt_tab[j].name))
+				{
+					if ((err = opt_tab[j].f(argc, &i, argv, data)))
+						return (err);
+					break ;
+				}
+			}
+		else if (i < argc)
+		{
+			if ((err = ft_check_file_name(argv[i])))
+				return (w_file_name);
+		}
+		else
+			err = w_format;
+	}
 	return (err);
-}
-
-t_err	ft_flag_dump(int32_t argc, int32_t *current, char **argv, t_data *data)
-{
-	if (++(*current) < argc && (data->dump = ft_atoi(argv[*current])) >= 0)
-		return (success);
-	return (w_format);
-}
-
-t_err	ft_flag_q(int32_t argc, int32_t *current, char **argv, t_data *data)
-{
-	data->quiet = true;
-	return (success);
-}
-
-t_err	ft_flag_a(int32_t argc, int32_t *current, char **argv, t_data *data)
-{
-	data->enable_aff = true;
-	return (success);
-}
-
-t_err	ft_flag_log(int32_t argc, int32_t *current, char **argv, t_data *data)
-{
-	data->log = true;
-	return (success);
 }
