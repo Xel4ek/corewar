@@ -48,7 +48,7 @@ void	ft_usage(void)
 	ft_printf("[FILE] extension must match <file name>.cor\n");
 	ft_printf("[OPTIONS] mandatory arguments\n\n");
 	while (++i < MAX_OPT)
-		if (opt_tab[i].id)
-			ft_printf("%6s %-12s %s\n\n", opt_tab[i].name,
-					opt_tab[i].arg_format, opt_tab[i].comment);
+		if (g_opt_tab[i].id)
+			ft_printf("%6s %-12s %s\n\n", g_opt_tab[i].name,
+					g_opt_tab[i].arg_format, g_opt_tab[i].comment);
 }

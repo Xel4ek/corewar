@@ -24,7 +24,7 @@ t_window	*ft_init_window(t_game *game)
 	new->width = (int)WINDOW_WIDTH;
 	new->mlx = mlx_init();
 	new->win = mlx_new_window(new->mlx, new->width, new->height,
-			(int)WINDOW_TITLE);
+			WINDOW_TITLE);
 	ft_bzero(new->champs, sizeof(t_champ) * (int)MAX_PLAYERS);
 	new->colors = ft_memalloc((int)MEM_SIZE * sizeof(t_color));
 	new->game = NULL;

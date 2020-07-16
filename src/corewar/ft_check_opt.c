@@ -22,9 +22,9 @@ t_err	ft_checker_helper(int32_t argc, char **argv, t_data *data, int *i)
 	j = MAX_OPT;
 	while (j--)
 	{
-		if (!ft_strcmp(argv[*i], opt_tab[j].name))
+		if (!ft_strcmp(argv[*i], g_opt_tab[j].name))
 		{
-			if ((err = opt_tab[j].f(argc, i, argv, data)))
+			if ((err = g_opt_tab[j].f(argc, i, argv, data)))
 				return (err);
 			break ;
 		}

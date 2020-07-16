@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef COREWAR_H
-#define COREWAR_H
+# define COREWAR_H
 
 # include "op.h"
 # include "libft.h"
@@ -40,7 +40,6 @@ typedef union			u_vm
 	int16_t		v_2;
 	int8_t		v_1;
 }						t_vm;
-
 
 typedef enum			e_color
 {
@@ -84,12 +83,11 @@ typedef enum			e_bool
 	true
 }						t_bool;
 
-
 typedef struct			s_hero
 {
 	unsigned char		program[CHAMP_MAX_SIZE];
 	int32_t				id;
-	header_t			header;
+	t_header			header;
 	char				*file_name;
 }						t_hero;
 
@@ -106,7 +104,6 @@ typedef struct			s_op
 	int					dir_size;
 	t_err				(*func)();
 }						t_op;
-
 
 typedef struct			s_cursor
 {
@@ -178,7 +175,7 @@ union					u_types
 		unsigned char	arg3: 2;
 		unsigned char	arg2: 2;
 		unsigned char	arg1: 2;
-	};
+	}					args;
 	unsigned char		value;
 };
 
@@ -191,27 +188,40 @@ typedef struct			s_opt{
 	char				comment[512];
 }						t_opt;
 
-t_err 					ft_flag_q(int32_t argc, int32_t *current, char **argv, t_data *data);
-t_err 					ft_flag_n(int32_t argc, int32_t *current, char **argv, t_data *data);
-t_err 					ft_flag_dump(int32_t argc, int32_t *current, char **argv, t_data *data);
-t_err 					ft_flag_a(int32_t argc, int32_t *current, char **argv, t_data *data);
-t_err 					ft_flag_log(int32_t argc, int32_t *current, char **argv, t_data *data);
-t_err 					ft_flag_vis(int32_t argc, int32_t *current, char **argv, t_data *data);
+t_err					ft_flag_q(int32_t argc, int32_t *current, char **argv,
+									t_data *data);
+t_err					ft_flag_n(int32_t argc, int32_t *current, char **argv,
+									t_data *data);
+t_err					ft_flag_dump(int32_t argc, int32_t *current,
+									char **argv, t_data *data);
+t_err					ft_flag_a(int32_t argc, int32_t *current, char **argv,
+									t_data *data);
+t_err					ft_flag_log(int32_t argc, int32_t *current, char **argv,
+									t_data *data);
+t_err					ft_flag_vis(int32_t argc, int32_t *current, char **argv,
+									t_data *data);
 
-static 					t_opt opt_tab[10] =
-{
-	{1,"-n", &ft_flag_n, 3,"[number]","Sets the number of the next player. If non-existent, the\n                    player will have the next available number in the order of\n                    the parameters. The last player will have the first process\n                    in the order of execution."},
-	{2,"-q", &ft_flag_q, 0, "","Disable the display of each actual execution of the \"live\"\n                    instruction"},
-	{3,"-dump", &ft_flag_dump, 2, "[nbr_cycles]","At the end of <nbr_cycles> of executions, dump the memory\n                    on the standard output and quit the game. The memory dumped\n                    in the hexadecimal format with 32 octets"
-  "per line."},
-	{4,"-a", &ft_flag_a, 0,"", "Enable aff function"},
-	{5,"-log", &ft_flag_log, 0,"", "Enable logger \"fuck.log\" and \"game.log\""},
-	{6,"-vis", &ft_flag_vis, 0,"", "Enable visualisation"}
+static t_opt	g_opt_tab[10] = {
+	{1, "-n", &ft_flag_n, 3, "[number]", "Sets the number of the next player. "
+		"If non-existent, the\n                    player will have the next "
+		"available number in the order of\n                    the parameters. "
+		"The last player will have the first process\n                    in "
+		"the order of execution."},
+	{2, "-q", &ft_flag_q, 0, "", "Disable the display of each actual execution "
+		"of the \"live\"\n                    instruction"},
+	{3, "-dump", &ft_flag_dump, 2, "[nbr_cycles]", "At the end of <nbr_cycles> "
+		"of executions, dump the memory\n                    on the standard "
+		"output and quit the game. The memory dumped\n                    in "
+		"the hexadecimal format with 32 octets per line."},
+	{4, "-a", &ft_flag_a, 0, "", "Enable aff function"},
+	{5, "-log", &ft_flag_log, 0, "", "Enable logger \"func.log\" and "
+		"\"game.log\""},
+	{6, "-vis", &ft_flag_vis, 0, "", "Enable visualisation"}
 };
 
 t_game					*ft_init_game(t_broker *broker);
-void 					ft_usage();
-void 					ft_logo();
+void					ft_usage(void);
+void					ft_logo(void);
 void					*ft_game_over(t_game **game);
 void					ft_itoa_vm(void *head, size_t address, u_int32_t value);
 void					ft_print_arena(t_game *game);
@@ -219,7 +229,7 @@ void					ft_print_error(t_err err);
 t_err					ft_parse_input(int argc, char **argv, t_data **data);
 t_err					ft_parse_hero(t_hero *hero, t_mem *mem);
 u_int32_t				ft_atoin(void *data, size_t size);
-void					ft_past_heroes(t_game * game, t_data *data);
+void					ft_past_heroes(t_game *game, t_data *data);
 t_err					ft_init_cursors(t_game *game);
 t_cursor				*ft_new_cursor();
 t_err					ft_clone_cursor(t_game *game, size_t address);
@@ -227,31 +237,38 @@ t_bool					ft_battle(t_game *game);
 void					ft_doomsday(t_game *game);
 t_err					ft_execute(t_game *game);
 void					ft_print_result(t_game *game);
-void					ft_print_memory(void *start, void *end, void *mark, void *tail);
-void					ft_print_hex(void *data, void *end, void *mark, void *tail);
-void					ft_print_str(void *data, void *end, void *mark, void *tail);
+void					ft_print_memory(void *start, void *end,
+						void *mark, void *tail);
+void					ft_print_hex(void *data, void *end,
+						void *mark, void *tail);
+void					ft_print_str(void *data, void *end,
+						void *mark, void *tail);
 int						ft_set_color(t_color color);
 int32_t					ft_get_data(t_game *game, int32_t arg_type);
 t_err					ft_get_heroes(t_data *data);
 t_err					ft_check_opt(int32_t argc, char **argv, t_data *data);
-t_err					ft_get_heroes_files(int argc, char **argv, t_data *data);
+t_err					ft_get_heroes_files(int argc, char **argv,
+						t_data *data);
 
 /*
 ** Logger
 */
-t_vm					ft_atoi_vm(void* head, size_t *address, size_t size);
+t_vm					ft_atoi_vm(void *head, size_t *address, size_t size);
 void					ft_log_game(t_game *game);
 t_log					*ft_logger_init(char *name);
 void					ft_log_cursor(t_game *game, size_t prev);
 void					ft_print_memory_fd(int fd, void *start, void *end);
-int32_t					ft_convert_arg(int32_t arg, t_game *game, int32_t arg_type, t_bool idx);
-int32_t					ft_get_arg(t_game *game, int32_t arg_type, t_bool idx);
+int32_t					ft_convert_arg(int32_t arg, t_game *game,
+						int32_t arg_type, t_bool idx);
+int32_t					ft_get_arg(t_game *game, int32_t arg_type,
+						t_bool idx);
 t_err					ft_is_correct_number(const char *number);
 t_err					ft_check_file_name(char *file_name);
 
 /*
 ** Visualisation
 */
-void					ft_past_reg(t_game *game, t_cursor *cursor, size_t position);
+void					ft_past_reg(t_game *game, t_cursor *cursor,
+						size_t position);
 
 #endif

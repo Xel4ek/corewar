@@ -55,12 +55,12 @@ static t_bool	ft_check_types(t_game *game)
 	op = cursor->op - 1;
 	cursor->current = (cursor->pc + OP_LEN) % MEM_SIZE;
 	type.value = ft_atoi_vm(game->arena, &cursor->current, TYPE_LEN).v_1;
-	ok = ft_check_arg(game, type.arg1, 0);
+	ok = ft_check_arg(game, type.args.arg1, 0);
 	if (g_op_tab[op].arg_count > 1)
-		ok = ft_check_arg(game, type.arg2, 1) && ok;
+		ok = ft_check_arg(game, type.args.arg2, 1) && ok;
 	if (g_op_tab[op].arg_count > 2)
-		ok = ft_check_arg(game, type.arg3, 2) && ok;
-	if (type.arg4)
+		ok = ft_check_arg(game, type.args.arg3, 2) && ok;
+	if (type.args.arg4)
 		ok = false;
 	if (!ok)
 		cursor->pc = cursor->current;

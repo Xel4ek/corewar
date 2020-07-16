@@ -26,7 +26,6 @@ static t_game	*ft_write_in_game_struct(t_broker *broker, t_game *game)
 	game->cv = &(broker->game_cv);
 	game->start = &(broker->game_start);
 	game->fps = &(broker->fps);
-	game->delay = false;
 	return (game);
 }
 

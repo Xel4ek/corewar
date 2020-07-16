@@ -25,7 +25,7 @@ t_err	op_lldi(t_game *game)
 	args[0] = ft_get_arg(game, type.args.arg1, true);
 	args[1] = ft_get_arg(game, type.args.arg2, true);
 	args[2] = ft_get_data(game, type.args.arg3);
-	address = cursor->pc + (arg2 + arg1);
+	address = cursor->pc + (args[1] + args[0]);
 	cursor->regs[args[2] - 1] = ft_atoi_vm(game->arena, &address, REG_SIZE).v_4;
 	cursor->carry = cursor->regs[args[2] - 1] ? false : true;
 	return (success);
