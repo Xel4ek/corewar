@@ -87,7 +87,7 @@ typedef struct			s_hero
 {
 	unsigned char		program[CHAMP_MAX_SIZE];
 	int32_t				id;
-	t_header			header;
+	header_t			header;
 	char				*file_name;
 }						t_hero;
 
@@ -253,6 +253,7 @@ t_err					ft_get_heroes_files(int argc, char **argv,
 /*
 ** Logger
 */
+
 t_vm					ft_atoi_vm(void *head, size_t *address, size_t size);
 void					ft_log_game(t_game *game);
 t_log					*ft_logger_init(char *name);
@@ -268,6 +269,7 @@ t_err					ft_check_file_name(char *file_name);
 /*
 ** Visualisation
 */
+
 void					ft_past_reg(t_game *game, t_cursor *cursor,
 						size_t position);
 
