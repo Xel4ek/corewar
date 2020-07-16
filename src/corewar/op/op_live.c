@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   op_live.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hwolf <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/17 13:34:18 by hwolf             #+#    #+#             */
+/*   Updated: 2020/03/17 13:34:19 by hwolf            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include "corewar.h"
 
-t_err op_live(t_game *game)
+t_err	op_live(t_game *game)
 {
-	t_cursor *cursor;
-	int32_t arg;
+	t_cursor	*cursor;
+	int32_t		arg;
 
 	cursor = game->cursor;
 	cursor->current = ft_mod(cursor->pc + OP_LEN, MEM_SIZE);
@@ -23,8 +35,6 @@ t_err op_live(t_game *game)
 			ft_printf("A process shows that player %d (\"%s\") is alive"
 			RESET"\n",
 			-arg, (game->winner)->header.prog_name);
-
-
 	}
 	return (success);
 }

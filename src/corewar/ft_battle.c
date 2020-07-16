@@ -34,8 +34,7 @@ static t_err	main_loop(t_game *game)
 			if (cursor->op > 0x00 && cursor->op < 0x11)
 				cursor->occupy = g_op_tab[cursor->op - 1].cycles;
 		}
-		if (cursor->occupy)
-			cursor->occupy--;
+		cursor->occupy -= (cursor->occupy) ? 1 : 0;
 		if (!cursor->occupy)
 			err = ft_execute(game);
 		if (cursor->alive && game->color[game->cursor->pc % MEM_SIZE] < i_blue)
@@ -43,6 +42,20 @@ static t_err	main_loop(t_game *game)
 		game->cursor = game->cursor->next;
 	}
 	return (err);
+}
+
+void			ft_battle_helper(t_game *game)
+{
+	ft_doomsday(game);
+	if (game->check_live >= NBR_LIVE || game->checks_done >= MAX_CHECKS)
+	{
+		game->cycles_to_die -= CYCLE_DELTA;
+		game->checks_done = 0;
+	}
+	if (game->input->log)
+		ft_log_game(game);
+	game->check_live = 0;
+	game->cycle = 0;
 }
 
 t_bool			ft_battle(t_game *game)
@@ -55,18 +68,7 @@ t_bool			ft_battle(t_game *game)
 		game->total_cycles++;
 		main_loop(game);
 		if (game->cycle >= game->cycles_to_die)
-		{
-			ft_doomsday(game);
-			if (game->check_live >= NBR_LIVE || game->checks_done >= MAX_CHECKS)
-			{
-				game->cycles_to_die -= CYCLE_DELTA;
-				game->checks_done = 0;
-			}
-			if (game->input->log)
-				ft_log_game(game);
-			game->check_live = 0;
-			game->cycle = 0;
-		}
+			ft_battle_helper(game);
 		if (game->total_cycles == game->input->dump)
 			return (true);
 		usleep(*(game->fps));
