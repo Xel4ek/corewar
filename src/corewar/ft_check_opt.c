@@ -36,7 +36,6 @@ t_err	ft_check_opt(int32_t argc, char **argv, t_data *data)
 {
 	t_err	err;
 	int		i;
-	int		j;
 
 	i = 0;
 	err = success;
