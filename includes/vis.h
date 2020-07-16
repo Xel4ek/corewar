@@ -77,53 +77,57 @@ typedef struct		s_point
 
 typedef struct		s_champ
 {
-	int             id;
-	int             color;
-	size_t          life_count;
-	size_t          lifes;
+	int				id;
+	int				color;
+	size_t			life_count;
+	size_t			lifes;
 
-}                   t_champ;
-
+}					t_champ;
 
 typedef struct		s_window
 {
 	void			*win;
 	void			*mlx;
-	t_game          *game;
-	int 			height;
-	int 			width;
-	int             color;
-	int             champ_count;
-	t_bool          end;
-	t_champ         champs[MAX_PLAYERS];
-	t_color         *colors;
-}                   t_window;
+	t_game			*game;
+	int				height;
+	int				width;
+	int				color;
+	int				champ_count;
+	t_bool			end;
+	t_champ			champs[MAX_PLAYERS];
+	t_color			*colors;
+}					t_window;
 
-t_point             ft_rewrite_point(int x, int y, int color);
-void 				ft_bresenham_line(t_point begin, t_point end, t_window *win);
-void				ft_fill_rectangle(t_window *win, t_point start, t_point param);
-void                ft_fill_gradient(t_window *win, t_point start, t_point param);
-void				ft_draw_rectangle(t_window *win, t_point start, t_point param);
-void                ft_draw_rectangle_with_name(t_window *win, t_point start, t_point param, char *title);
-void                ft_draw_solid_circle(t_window *win, t_point start, int rad);
-void        		ft_draw_circle(t_window *win, t_point start, int rad);
-void                ft_draw_champion(t_window *win, t_point begin, int color, int i);
-int                 ft_get_color(int begin_color, int end_color, double percent);
-void                ft_delete_window(t_window **window);
-t_window            *ft_init_window(t_game *game);
-int                 ft_key_press(int key, void *param);
-void                ft_put_logo(t_window *win, int x, int y);
-void                ft_put_info(t_window *win, t_point begin);
-void                ft_draw_grid(t_window *win);
-int                 ft_close_window(void *ptr);
-void                ft_delay(int number_of_seconds);
-t_bool              ft_battle_vis(t_game *game);
-int                 ft_redraw_game_field(t_window *win);
-void                ft_draw_heart(t_window *win, t_point begin, int color);
-void                ft_draw_start_field(t_window *win, t_point start);
-int                 ft_check_color(int color);
-void                ft_check_lifes(t_window *win);
-void                ft_draw_game_field(t_window *win, t_point start);
+t_point				ft_rewrite_point(int x, int y, int color);
+void				ft_bresenham_line(t_point begin, t_point end, \
+					t_window *win);
+void				ft_fill_rectangle(t_window *win, t_point start, \
+					t_point param);
+void				ft_fill_gradient(t_window *win, t_point start, \
+					t_point param);
+void				ft_draw_rectangle(t_window *win, t_point start, \
+					t_point param);
+void				ft_draw_rectangle_with_name(t_window *win, t_point start, \
+					t_point param, char *title);
+void				ft_draw_solid_circle(t_window *win, t_point start, int rad);
+void				ft_draw_circle(t_window *win, t_point start, int rad);
+void				ft_draw_champion(t_window *win, t_point begin, \
+					int color, int i);
+int					ft_get_color(int begin_color, int end_color, \
+					double percent);
+void				ft_delete_window(t_window **window);
+t_window			*ft_init_window(t_game *game);
+int					ft_key_press(int key, void *param);
+void				ft_put_logo(t_window *win, int x, int y);
+void				ft_put_info(t_window *win, t_point begin);
+void				ft_draw_grid(t_window *win);
+int					ft_close_window(void *ptr);
+int					ft_redraw_game_field(t_window *win);
+void				ft_draw_heart(t_window *win, t_point begin, int color);
+void				ft_draw_start_field(t_window *win, t_point start);
+int					ft_check_color(int color);
+void				ft_check_lifes(t_window *win);
+void				ft_draw_game_field(t_window *win, t_point start);
 int					ft_mouse_hook(int button, int x, int y, void *win_ptr);
 
 #endif

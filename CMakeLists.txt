@@ -35,7 +35,8 @@ set(COREWAR_SRC
         src/corewar/op/op_sub.c
         src/corewar/op/op_and.c
         src/corewar/op/op_or.c
-        src/vis/ft_past_reg.c
+        src/corewar/ft_print_arena_utils.c
+        src/corewar/ft_past_reg.c
         src/corewar/op/op_xor.c src/corewar/op/op_ldi.c src/corewar/op/op_lld.c src/corewar/op/op_lldi.c src/corewar/op/op_lfork.c src/corewar/op/op_aff.c src/corewar/ft_options.c)
 
 set(LOGER_SRC
@@ -84,7 +85,7 @@ set (VIS_SRC
 
 add_executable(corewar ${COREWAR_SRC} ${LOGER_SRC} ${VIS_SRC} includes/corewar.h includes/op.h src/corewar/corewar.c includes/corewar_op.h)
 add_executable(asm ${ASM_SRC} includes/corewar.h includes/asm.h)
-add_executable(sandbox ${COREWAR_SRC} ${LOGER_SRC} includes/corewar.h includes/op.h src/corewar/sandbox.c)
+add_executable(sandbox ${COREWAR_SRC} ${LOGER_SRC} includes/corewar.h includes/op.h)
 
 include_directories(
         includes
