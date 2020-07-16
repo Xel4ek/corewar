@@ -24,8 +24,8 @@
 # define MINUS 27
 
 # define WINDOW_LOGO "VIRTUAL MACHINE v1.4"
-# define FONT_SIZE 7
-# define LOGO_HEIGHT 49
+# define SIZE 7
+# define HEIGHT 49
 
 # define C_MAGENTA 0XEC00FF
 # define C_BLUE 0X0049FF

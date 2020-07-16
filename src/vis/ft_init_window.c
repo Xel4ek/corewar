@@ -20,12 +20,13 @@ t_window	*ft_init_window(t_game *game)
 
 	if (!(new = (t_window *)malloc(sizeof(t_window))))
 		return (NULL);
-	new->height = WINDOW_HEIGHT;
-	new->width = WINDOW_WIDTH;
+	new->height = (int)WINDOW_HEIGHT;
+	new->width = (int)WINDOW_WIDTH;
 	new->mlx = mlx_init();
-	new->win = mlx_new_window(new->mlx, new->width, new->height, WINDOW_TITLE);
-	ft_bzero(new->champs, sizeof(t_champ) * MAX_PLAYERS);
-	new->colors = ft_memalloc(MEM_SIZE * sizeof(t_color));
+	new->win = mlx_new_window(new->mlx, new->width, new->height,
+			(int)WINDOW_TITLE);
+	ft_bzero(new->champs, sizeof(t_champ) * (int)MAX_PLAYERS);
+	new->colors = ft_memalloc((int)MEM_SIZE * sizeof(t_color));
 	new->game = NULL;
 	new->champ_count = 0;
 	new->end = false;

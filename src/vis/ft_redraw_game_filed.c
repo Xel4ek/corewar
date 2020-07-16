@@ -23,23 +23,23 @@ static void	ft_write_winner(t_window *win, t_point begin)
 	name = win->game->winner->header.prog_name;
 	temp = name[63];
 	name[63] = '\0';
-	mlx_string_put(win->mlx, win->win, begin.x + 180, \
-	begin.y +  60, begin.color, name);
+	mlx_string_put(win->mlx, win->win, begin.x + 180,
+			begin.y + 60, begin.color, name);
 	name[63] = temp;
 	name = &name[64];
-	mlx_string_put(win->mlx, win->win, begin.x + 180, \
-	begin.y +  80, begin.color, name);
+	mlx_string_put(win->mlx, win->win, begin.x + 180,
+			begin.y + 80, begin.color, name);
 	name = win->game->winner->header.comment;
 	temp = name[63];
 	name[63] = '\0';
-	mlx_string_put(win->mlx, win->win, begin.x + 180, \
-	begin.y +  110, begin.color, name);
+	mlx_string_put(win->mlx, win->win, begin.x + 180,
+			begin.y + 110, begin.color, name);
 	name[63] = temp;
 	name = &name[64];
 	temp = name[63];
 	name[63] = '\0';
-	mlx_string_put(win->mlx, win->win, begin.x + 180, \
-	begin.y +  130, begin.color, name);
+	mlx_string_put(win->mlx, win->win, begin.x + 180,
+			begin.y + 130, begin.color, name);
 	name[63] = temp;
 }
 
@@ -54,12 +54,12 @@ static void	ft_write_result(t_window *win)
 	param = ft_rewrite_point(FIELD_WIDTH - 30, FIELD_HEIGHT - 30, C_BLACK);
 	ft_fill_rectangle(win, begin, param);
 	mlx_string_put(win->mlx, win->win, begin.x + 20, \
-	begin.y +  20, C_CYAN, "The game is over!");
+	begin.y + 20, C_CYAN, "The game is over!");
 	mlx_string_put(win->mlx, win->win, begin.x + 20, \
-	begin.y +  60, C_CYAN, "The winner is:");
+	begin.y + 60, C_CYAN, "The winner is:");
 	ft_write_winner(win, begin);
 	mlx_string_put(win->mlx, win->win, begin.x + 20, \
-	begin.y +  110, C_CYAN, "Comment:");
+	begin.y + 110, C_CYAN, "Comment:");
 }
 
 static void	ft_write_string(t_window *win, t_point begin, int nbr)
